@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Lottie from "lottie-react"
 import "./index.css"
 import "./App.css"
@@ -51,12 +51,12 @@ function LottieBtn({ href, children }) {
   const lottieRef2 = useRef(null)
   const [animData, setAnimData] = useState(null)
 
-  useState(() => {
+  useEffect(() => {
     fetch("/lottie-btn.json")
       .then(r => r.json())
       .then(setAnimData)
       .catch(() => {})
-  })
+  }, [])
 
   const handleEnter = () => {
     lottieRef1.current?.play()
