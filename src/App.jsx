@@ -136,6 +136,9 @@ export default function App() {
     ? "Ta marge nette est négative ou nulle — tu es déjà à perte avant la pub."
     : null
 
+  const errRoasActuel = roasActuel !== "" && Number(roasActuel) < 1
+    ? "⚠️ ROAS < 1 : chaque euro dépensé rapporte moins de 1 € de CA." : null
+
   // Calculs
   const roasSimple = !errMarge && marge !== "" ? computeSimple(Number(marge)) : null
   const roasFull = !errMarge && !errFraisCa && !errMargeNette && marge && fraisFixes && ca
@@ -207,7 +210,7 @@ export default function App() {
               className="expand-btn"
               onClick={() => setShowAffiner(!showAffiner)}
             >
-              {showAffiner ? "▲ Masquer" : "▼ Affiner avec tes frais fixes"}
+              {showAffiner ? "▲ Masquer" : "▼ Affiner → intégrer tes frais fixes pour un ROAS exact"}
             </button>
 
             {showAffiner && (
@@ -256,7 +259,7 @@ export default function App() {
               className="expand-btn"
               onClick={() => setShowComparer(!showComparer)}
             >
-              {showComparer ? "▲ Masquer" : "▼ Comparer avec ton ROAS actuel"}
+              {showComparer ? "▲ Masquer" : "▼ Comparer → es-tu rentable avec ton ROAS actuel ?"}
             </button>
 
             {showComparer && (
@@ -270,6 +273,7 @@ export default function App() {
                     value={roasActuel}
                     onChange={setRoasActuel}
                     optional
+                    error={errRoasActuel}
                   />
                   <NumInput
                     label="Dépenses Ads mensuelles"
